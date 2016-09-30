@@ -21,7 +21,7 @@ Description
 
 Vision Statement
 
-SortMe Software, the provider of the most intelligent, platform-neutral, and efficient tools to help plan, organize and track the ever-changing lives of it’s customers. 
+The goal of SortMe Software is to provide users with the ability to efficiently organize their time in order to flourish in every area of their lives.
 
 
 
