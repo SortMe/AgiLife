@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<html lang="en-US">
+<head>
+  <title>AgiLife</title>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<font color="rgb(10,10,10)" style="font-family:Open Sans;text-align:center;">
+<h1><em> AgiLife</em><br> We will make the time for you </h1>
+<h2> About Us <br>Contact Information<br>Source Code<br>Mission Statement<br>User Commitment</h2>
+<h3>
+<iframe src="https://calendar.google.com/calendar/embed?showNav=0&amp;showPrint=0&amp;showTabs=0&amp;showCalendars=0&amp;mode=WEEK&amp;height=600&amp;wkst=1&amp;bgcolor=%23999999&amp;src=hfngjolt50ubkjdbrt20vonblo%40group.calendar.google.com&amp;color=%235229A3&amp;ctz=America%2FDenver" style="border:solid 1px #777" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+</h3>
+<script>
+//Build dynamic arrays to hold information
+	var events = [];
+	var startTime = [];
+	var endTime = [];
+	function getEvents(){ //Get the text entered in the fields on button click
+  var user_events = document.getElementById("event").value;
+  var user_start = document.getElementById("start").value;
+  var user_end = document.getElementById("end").value;
+//Push to the dynamic arrays
+	events.push(user_events);
+	startTime.push(user_start);
+	endTime.push(user_end);
+	document.getElementById("doEvent").innerHTML = (events.join(' '))+' '+(startTime.join(' '))+' '+(endTime.join(' '));
+
+	}
+
+
+</script>
+
+<!-- Text Input bars: Event, Start Time, End Time -->
+<input type='text' name='event' id='event' maxlength="50" placeholder="Event" /><br/>
+<input type='text' name='start' id='start' maxlength="50" placeholder="Start Time" /><br/>
+<input type='text' name='end' id='end' maxlength="50" placeholder="End Time" /><br/>
+<!-- Submit button -> calls function getEvents() -->
+<input type='button' name='Submit' value='Submit' onclick="getEvents()" />
+
+ 
+<p id='doEvent'></p>
+
+</font>
+</body>
+</html>
