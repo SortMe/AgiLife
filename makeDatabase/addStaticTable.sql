@@ -5,7 +5,8 @@ myKey Int,
 event VARCHAR(100),
 required Boolean,
 timeStart DATETIME, -- form looks like: 2016-10-25 08:20:00
-timeEnd DATETIME
+timeEnd DATETIME,
+eventLength Double -- Optional, either enter event length or time
 );
 
 

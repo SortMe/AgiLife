@@ -15,18 +15,16 @@
 </h3>
 <script>
 //Build dynamic arrays to hold information
-	var events = [];
-	var startTime = [];
-	var endTime = [];
+var client = new Object();
+	client.events = [];
+	client.startTime = [];
+	client.endTime = [];
 	function getEvents(){ //Get the text entered in the fields on button click
-  var user_events = document.getElementById("event").value;
-  var user_start = document.getElementById("start").value;
-  var user_end = document.getElementById("end").value;
-//Push to the dynamic arrays
-	events.push(user_events);
-	startTime.push(user_start);
-	endTime.push(user_end);
-	document.getElementById("doEvent").innerHTML = (events.join(' '))+' '+(startTime.join(' '))+' '+(endTime.join(' '));
+	client.events.push(document.getElementById("event").value);
+	client.startTime.push(document.getElementById("start").value);
+	client.endTime.push(document.getElementById("end").value);
+
+	document.getElementById("doEvent").innerHTML = (client.events.join(' '))+' '+(client.startTime.join(' '))+' '+(client.endTime.join(' '));
 
 	}
 
@@ -36,12 +34,15 @@
 <!-- Text Input bars: Event, Start Time, End Time -->
 <input type='text' name='event' id='event' maxlength="50" placeholder="Event" /><br/>
 <input type='text' name='start' id='start' maxlength="50" placeholder="Start Time" /><br/>
-<input type='text' name='end' id='end' maxlength="50" placeholder="End Time" /><br/>
+<input type='text' name='end' id='end' maxlength="50" placeholder="Length of
+ Event" /><br/>
 <!-- Submit button -> calls function getEvents() -->
 <input type='button' name='Submit' value='Submit' onclick="getEvents()" />
 
  
 <p id='doEvent'></p>
+<!-- this is the place holder that prints the output of the data that must go
+to SQL -->
 
 </font>
 </body>
