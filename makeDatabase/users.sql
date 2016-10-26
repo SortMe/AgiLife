@@ -4,4 +4,5 @@ CREATE TABLE IF NOT EXISTS 'users' (
 'lastname' VARCHAR(15) NOT NULL
 'email' VARCHAR(30)
 
+PRIMARY KEY ('username')
 );
