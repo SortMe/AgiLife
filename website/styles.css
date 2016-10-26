@@ -36,6 +36,18 @@ p {  /* Formatting for input text */
 	text-align: center;
 }
 
+.wrapper{
+	white-space: nowrap;
+}
+
+input[type=checkbox]{
+	position:absolute;
+	top:50%;
+	left:58%;
+
+
+}
+
 input[type=submit]{ /* formatting for submit bar position */
 	border: 1px inset black;	
 	position:absolute;

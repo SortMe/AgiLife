@@ -20,10 +20,11 @@ var client = new Object();
 	client.startTime = [];
 	client.endTime = [];
 	function getEvents(){ //Get the text entered in the fields on button click
+
 	client.events.push(document.getElementById("event").value);
 	client.startTime.push(document.getElementById("start").value);
 	client.endTime.push(document.getElementById("end").value);
-
+// This is where we can start working with the data
 	document.getElementById("doEvent").innerHTML = (client.events.join(' '))+' '+(client.startTime.join(' '))+' '+(client.endTime.join(' '));
 
 	}
@@ -34,8 +35,10 @@ var client = new Object();
 <!-- Text Input bars: Event, Start Time, End Time -->
 <input type='text' name='event' id='event' maxlength="50" placeholder="Event" /><br/>
 <input type='text' name='start' id='start' maxlength="50" placeholder="Start Time" /><br/>
-<input type='text' name='end' id='end' maxlength="50" placeholder="Length of
- Event" /><br/>
+<input type='text' name='end' id='end' maxlength="50" placeholder="Length of Event" /><br/>
+<span class='wrapper'>
+<input type='checkbox' name='predict' value='1' id='checkbox' checked>Predict this input<br>
+</span>
 <!-- Submit button -> calls function getEvents() -->
 <input type='button' name='Submit' value='Submit' onclick="getEvents()" />
 
