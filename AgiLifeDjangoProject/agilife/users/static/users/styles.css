@@ -1,0 +1,114 @@
+body {
+	background-color: #DFE2DB;
+}
+h1 { /* formatting for title */
+	font-size: 300%;
+	border:solid #191919;
+	border-style: inset hidden outset hidden;
+	border-width: medium;
+	background-color: lightgrey;
+	margin: 10px 0px 100px 0px;
+	padding: 25px;
+
+
+}
+h2 {  /* formatting for about us */
+	font-size:120%;
+	font-family: open sans;
+	padding: 0px;
+	margin: 100px 0px 200px 0px;
+	text-align: justify;
+}
+h3 { /* formatting for Google Calendar */
+	margin: 10px auto;
+	font-family: open sans;
+
+}
+
+p {  /* Formatting for input text */
+	position:absolute;
+	top:57%;
+	left:45%;
+	font-family: open sans;
+	font-size: 150%;
+	border-style:inset hidden outset hidden;
+	background-color:lightgrey;
+	text-align: center;
+}
+
+input[type=submit]{ /* formatting for submit bar position */
+	border: 1px inset black;	
+	position:absolute;
+	top:50%;
+	left:55%;
+	}
+input[id=end]{ /* formatting for submit field End */
+	border: 1px inset black;
+	position:absolute;
+	height:20px;
+	width:150px;
+	top:50%;
+	left:45%;
+	}
+input[id=start]{ /* formatting for submit field Start */
+	border: 1px inset black;
+	position:absolute;
+	height:20px;
+	width:150px;
+	top:47%;
+	left:45%;
+	}
+
+input[id=event]{  /* formatting for submit field Event */
+	border: 1px inset black;
+	position:absolute;
+	height:20px;
+	width:150px;
+	top:44%;
+	left:45%;
+	}
+	
+input[type=button] { /* formatting for Submit button */
+	position:absolute;
+	top:54%;
+	left:45%;
+	-moz-box-shadow:inset 0px 1px 0px 0px #ffffff;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #ffffff;
+	box-shadow:inset 0px 1px 0px 0px #ffffff;
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ffffff), color-stop(1, #f6f6f6));
+	background:-moz-linear-gradient(top, #ffffff 5%, #f6f6f6 100%);
+	background:-webkit-linear-gradient(top, #ffffff 5%, #f6f6f6 100%);
+	background:-o-linear-gradient(top, #ffffff 5%, #f6f6f6 100%);
+	background:-ms-linear-gradient(top, #ffffff 5%, #f6f6f6 100%);
+	background:linear-gradient(to bottom, #ffffff 5%, #f6f6f6 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#f6f6f6',GradientType=0);
+	background-color:#ffffff;
+	-moz-border-radius:6px;
+	-webkit-border-radius:6px;
+	border-radius:6px;
+	border:1px solid #dcdcdc;
+	display:inline-block;
+	cursor:pointer;
+	color:#666666;
+	font-family:Arial;
+	font-size:15px;
+	font-weight:bold;
+	padding:9px 24px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #ffffff;
+}
+button:hover { /* Action when hovering over the Submit button   */
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #f6f6f6), color-stop(1, #ffffff));
+	background:-moz-linear-gradient(top, #f6f6f6 5%, #ffffff 100%);
+	background:-webkit-linear-gradient(top, #f6f6f6 5%, #ffffff 100%);
+	background:-o-linear-gradient(top, #f6f6f6 5%, #ffffff 100%);
+	background:-ms-linear-gradient(top, #f6f6f6 5%, #ffffff 100%);
+	background:linear-gradient(to bottom, #f6f6f6 5%, #ffffff 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#f6f6f6', endColorstr='#ffffff',GradientType=0);
+	background-color:#f6f6f6;
+}
+button:active {
+
+}
+
+
