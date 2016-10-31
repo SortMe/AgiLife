@@ -31,13 +31,13 @@ class Event(object):    #Create class for managing Event Time
 #Establish lists for Time
     self.EarlyMorningTime = []
     self.LateMorningTime = []
-    self.EalryEveningTime = []
+    self.EarlyEveningTime = []
     self.LateEveningTime = []
 
 #Establish lists for duration
     self.EarlyMorningLength = []
     self.LateMorningLength = []
-    self.EalryEveningLength = []
+    self.EarlyEveningLength = []
     self.LateEveningLength = []
 
   def addLateMorning(self, startTime, length):
@@ -54,7 +54,7 @@ class Event(object):    #Create class for managing Event Time
 
   def addEarlyEvening(self, startTime, length):
     self.EarlyEveningTime.append(startTime)
-    self.EalryEveningLength.append(length)
+    self.EarlyEveningLength.append(length)
               
 #Function checks to make sure the added value doesn't conflict with existing events
   def checkValid(self, listLength, listTime, checkTime, checkLength):  # list, list, int
