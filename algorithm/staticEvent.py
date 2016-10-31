@@ -59,7 +59,7 @@ class Event(object):    #Create class for managing Event Time
 #Function checks to make sure the added value doesn't conflict with existing events
   def checkValid(self, listLength, listTime, checkTime, checkLength):  # list, list, int
     for i in range(0, len(listLength)):
-    timeBetweenEvents = abs(listTime[i] - checkTime)
+      timeBetweenEvents = abs(listTime[i] - checkTime)
       if timeBetweenEvents < listLength[i]:
         return False
       if timeBetweenEvents < checkLength:
