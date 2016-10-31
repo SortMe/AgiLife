@@ -99,7 +99,7 @@ class Event(object):    #Create class for managing Event Time
 
 static = Event([],[])    #build object
 static.buildEvent(490, 5)  #add static events to object
-static.buildEvent(500, 10)
+static.buildEvent(500, 10)  # params(start time, duration) ---> both in minutes
 static.buildEvent(565, 30)
 static.buildEvent(550, 40)
 static.buildEvent(540,30)
