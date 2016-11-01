@@ -30,6 +30,8 @@ class Event(object):    #Create class for managing Event Time
     self.early_evening_time = []
     self.late_evening_time = []
 
+    self.time_conversion = []
+
   def add_late_morning(self, startTime, duration):
     self.late_morning_time.append((startTime,duration))
 
@@ -56,6 +58,14 @@ class Event(object):    #Create class for managing Event Time
         return False
 
     return True
+
+  def convert_to_time(self):
+    for i in range (0, len(static.early_morning_time)):
+      self.time_conversion.append((round((self.early_morning_time[i][0]/60.0),2), self.early_morning_time[i][1]))
+    return self.time_conversion
+      
+     
+
 
 #Function called to input new events
   def build_event(self, time, duration):
@@ -97,9 +107,10 @@ static.build_event(540,30)
 
 
 
+time_conversion = static.convert_to_time()
 
 for i in range (0, len(static.early_morning_time)):
-  print 'The event starts at: ', round((static.early_morning_time[i][0]/60.0),2)
+  print 'The event starts at: ',time_conversion[i][0]
   #Minutes into day
-  print 'and lasts for: ',static.early_morning_time[i][0] ,' minutes.'
+  print 'and lasts for: ',time_conversion[i][1] ,' minutes.'
 
