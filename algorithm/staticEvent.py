@@ -19,9 +19,7 @@
 #  check_valid: params(a list of durations to check, a list of start times that
 #  correlate to durations, and the start time of the function to be added)
 #    The helper function to check for overlapping events
-
-
-
+import math
 
 class Free_Time(object):
     """docstring for Free_Time."""
@@ -105,7 +103,9 @@ class Event(object):    #Create class for managing Event Time
 
 
 def time_convert(time):
-    return (round((time/60.0),2))
+    minutes = time%60
+    hours = math.trunc(time/60.0)
+    return (hours,minutes)
 
 # Use Examples:
 # object.early_morning_time --- print list of times for early morning events
@@ -119,11 +119,13 @@ static.build_event(500, 10)
 static.build_event(565, 30)
 static.build_event(550, 40)
 static.build_event(540,30)
+
 free = Free_Time(static.early_morning_time)
 free.parse_list(static.early_morning_time)
 
 for i in range (0, len(free.free_time)):
-    print 'START', free.free_time[i][0]
+    time = time_convert(free.free_time[i][0])
+    print 'START', time[0],':', time[1]
     print 'DURATION', free.free_time[i][1]
 
 
@@ -132,6 +134,7 @@ for i in range (0, len(free.free_time)):
 
 
 for i in range (0, len(static.early_morning_time)):
-  print 'The event starts at: ',static.early_morning_time[i][0]
+  time = time_convert(static.early_morning_time[i][0])
+  print 'The event starts at: ', time[0],':', time[1]
   #Minutes into day
   print 'and lasts for: ',static.early_morning_time[i][1] ,' minutes.'
