@@ -28,10 +28,14 @@ class Free_Time(object):
     def __init__(self, filled_time):
         self.free_time = []
 
+
     def parse_list(self, filled_time):
-        self.free_time.append((480, filled_time[0][0]))
+        start_time = 480
+        self.free_time.append((start_time, filled_time[0][0] - start_time ))
         for i in range(1, len(filled_time)):
-            self.free_time.append(((filled_time[i][0]+filled_time[i][1]), filled_time[i][0]))
+            start_time = (filled_time[i][0]+filled_time[i][1])
+            duration = start_time - filled_time[i][0]
+            self.free_time.append((start_time, duration))
             #The first index in the tuple is the start time, the second index is the end time
 
 
@@ -120,7 +124,7 @@ free.parse_list(static.early_morning_time)
 
 for i in range (0, len(free.free_time)):
     print 'START', free.free_time[i][0]
-    print 'END', free.free_time[i][1]
+    print 'DURATION', free.free_time[i][1]
 
 
 
