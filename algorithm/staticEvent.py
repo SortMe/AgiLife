@@ -19,23 +19,20 @@
 #  check_valid: params(a list of durations to check, a list of start times that
 #  correlate to durations, and the start time of the function to be added)
 #    The helper function to check for overlapping events
+
+
+
+
 class Free_Time(object):
     """docstring for Free_Time."""
     def __init__(self, filled_time):
-        self.filled_time = filled_time
-        self.start_time = []
-        self.end_time = []
-        self.start_of_day = 480
-        self.start_time.append(480)
+        self.free_time = []
 
     def parse_list(self, filled_time):
-        for i in range(0, len(filled_time)):
-            #the start time of the next interval is equal to the end time of the previous
-            if i != len(filled_time)-1:
-                self.start_time.append(filled_time[i][0] + filled_time[i][1])
-
-            self.end_time.append(filled_time[i][0])
-
+        self.free_time.append((480, filled_time[0][0]))
+        for i in range(1, len(filled_time)):
+            self.free_time.append(((filled_time[i][0]+filled_time[i][1]), filled_time[i][0]))
+            #The first index in the tuple is the start time, the second index is the end time
 
 
 class Event(object):    #Create class for managing Event Time
@@ -76,13 +73,6 @@ class Event(object):    #Create class for managing Event Time
 
     return True
 
-  def convert_to_time(self):
-    for i in range (0, len(static.early_morning_time)):
-      self.time_conversion.append((round((self.early_morning_time[i][0]/60.0),2), self.early_morning_time[i][1]))
-    return self.time_conversion
-
-
-
 
 #Function called to input new events
   def build_event(self, time, duration):
@@ -109,6 +99,10 @@ class Event(object):    #Create class for managing Event Time
       if self.check_valid(self.late_evening_time, time, duration) == True:
         self.add_late_evening(time, duration)
 
+
+def time_convert(time):
+    return (round((time/60.0),2))
+
 # Use Examples:
 # object.early_morning_time --- print list of times for early morning events
 # object.EarlyMorningduration --print duration of the events
@@ -123,14 +117,17 @@ static.build_event(550, 40)
 static.build_event(540,30)
 free = Free_Time(static.early_morning_time)
 free.parse_list(static.early_morning_time)
-for i in range (0, len(free.start_time)):
-    print 'START', (free.start_time[i]/60.0)
-    print 'END', round(free.end_time[i]/60.0,2)
+
+for i in range (0, len(free.free_time)):
+    print 'START', free.free_time[i][0]
+    print 'END', free.free_time[i][1]
 
 
-time_conversion = static.convert_to_time()
+
+
+
 
 for i in range (0, len(static.early_morning_time)):
-  print 'The event starts at: ',time_conversion[i][0]
+  print 'The event starts at: ',static.early_morning_time[i][0]
   #Minutes into day
-  print 'and lasts for: ',time_conversion[i][1] ,' minutes.'
+  print 'and lasts for: ',static.early_morning_time[i][1] ,' minutes.'
