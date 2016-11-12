@@ -23,22 +23,28 @@ import math
 
 class Free_Time(object):
     """docstring for Free_Time."""
-    def __init__(self, filled_time):
+    def __init__(self, filled_time, unit_length):
         self.free_time = []
 
 
     def parse_list(self, filled_time):
+        free_time_length = len(filled_time)
         start_time = 480
+        period_end = start_time + 179
         self.free_time.append((start_time, filled_time[0][0] - start_time ))
-        for i in range(1, len(filled_time)):
-            start_time = (filled_time[i][0]+filled_time[i][1])
-            duration = start_time - filled_time[i][0]
+        for i in range(1, free_time_length):
+            start_time = filled_time[i-1][0] + filled_time[i-1][1]
+            duration = filled_time[i][0] - start_time
             self.free_time.append((start_time, duration))
+        #This last iteration accounts for the last case, due to staggered iterative input one index is out of scope
+        start_time = filled_time[free_time_length-1][0] + filled_time[free_time_length-1][1]
+        duration = period_end - start_time
+        self.free_time.append((start_time, duration ))
             #The first index in the tuple is the start time, the second index is the end time
 
 
 class Event(object):    #Create class for managing Event Time
-  def __init__(self, startTime, duration):
+  def __init__(self):
 
 #Establish lists for Time, these will be tuples of (startTime, duration)
     self.early_morning_time = []
@@ -67,13 +73,17 @@ class Event(object):    #Create class for managing Event Time
 #Function checks to make sure the added value doesn't conflict with existing events
   def check_valid(self,list_time, check_time, check_duration):  # list, list, int
     for i in range(0, len(list_time)):
-      time_between_events = abs(list_time[i][0] - check_time)
-      if time_between_events < list_time[i][1]:
+      time_being_added = list_time[i][0]
+      time_already_logged = list_time[i][1]
+      time_between_events = abs(time_being_added - check_time)
+
+      if time_between_events < time_already_logged: #check for before new event
         return False
       if time_between_events < check_duration:
-        return False
+          return False
 
     return True
+
 
 
 #Function called to input new events
@@ -113,28 +123,39 @@ def time_convert(time):
 # object.getEarlyMorning(30) --get all events that last for 30 minutes or
 # longer
 
-static = Event([],[])    #build object
-static.build_event(490, 5)  #add static events to object
-static.build_event(500, 10)
-static.build_event(565, 30)
-static.build_event(550, 40)
-static.build_event(540,30)
-
-free = Free_Time(static.early_morning_time)
-free.parse_list(static.early_morning_time)
-
-for i in range (0, len(free.free_time)):
-    time = time_convert(free.free_time[i][0])
-    print 'START', time[0],':', time[1]
-    print 'DURATION', free.free_time[i][1]
 
 
+def main():
+    static = Event()    #build object
+    static.build_event(490, 5)  #add static events to object
+    static.build_event(500, 10)
+    static.build_event(565, 30)
+    static.build_event(550, 40)
+    static.build_event(540,30)
+    unit_length = 179
+    free = Free_Time(static.early_morning_time, unit_length)
+    free.parse_list(static.early_morning_time)
+
+    for i in range (0, len(free.free_time)):
+        time = time_convert(free.free_time[i][0])
+        print 'The free time starts at:', time[0],':', time[1]
+        print 'And lasts for:', free.free_time[i][1], " minutes"
+
+
+
+    print '-------------------------------------'
+
+
+    for i in range (0, len(static.early_morning_time)):
+      time = time_convert(static.early_morning_time[i][0])
+      print 'The event starts at: ', time[0],':', time[1]
+      #Minutes into day
+      print 'and lasts for: ',static.early_morning_time[i][1] ,' minutes.'
 
 
 
 
-for i in range (0, len(static.early_morning_time)):
-  time = time_convert(static.early_morning_time[i][0])
-  print 'The event starts at: ', time[0],':', time[1]
-  #Minutes into day
-  print 'and lasts for: ',static.early_morning_time[i][1] ,' minutes.'
+
+
+
+main()
