@@ -9,15 +9,16 @@ with open('input_data.json') as data_file:
 
 User1 = staticEvent.Event()
 unit_length = 179
-
-start_time = data["test_one"].keys()
-duration = data["test_one"].values()
+json_data = "test_one"
+start_time = data[json_data].keys()
+duration = data[json_data].values()
 
 #print values being entered from json
-for i in range (0, len(start_time)):
+list_length = len(start_time)
+for i in range (0, list_length):
     print start_time[i], duration[i]
 
-for i in range (0, len(start_time)):
+for i in range (0, list_length):
     User1.build_event(int(start_time[i]), int(duration[i]))
 
 free = staticEvent.Free_Time(User1.early_morning_time)

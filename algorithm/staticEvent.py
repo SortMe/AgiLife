@@ -1,24 +1,26 @@
-# Each data point needs: Minutes availible, time of day qualifier, potential
-# weight:
-#1440 minutes per day, say day is from 8a to 8p for ease,
-#Early Morning: (480 - 660) duration(180 min)
-#Late Morning (660 - 840)
-#Early Evening (840 - 1000)
-#Late Evening (1000 - 1180)
+'''
+ Each data point needs: Minutes availible, time of day qualifier, potential
+ weight:
+1440 minutes per day, say day is from 8a to 8p for ease,
+Early Morning: (480 - 660) duration(180 min)
+Late Morning (660 - 840)
+Early Evening (840 - 1000)
+Late Evening (1000 - 1180)
 
-#This allows for the creation of Static Events:
-# the Time suffix is the start time of each unit
-# the duration suffix is the duration of each unit
+This allows for the creation of Static Events:
+ the Time suffix is the start time of each unit
+ the duration suffix is the duration of each unit
 
-# The class functions are:
-#  Build Event: params( time of event to be added, duration of event to be
-#  added)
-#   - checks for proper category to be placed in
-#   - checks to make sure it wouldn't overlap with another event
+ The class functions are:
+  Build Event: params( time of event to be added, duration of event to be
+  added)
+   - checks for proper category to be placed in
+   - checks to make sure it wouldn't overlap with another event
 
-#  check_valid: params(a list of durations to check, a list of start times that
-#  correlate to durations, and the start time of the function to be added)
-#    The helper function to check for overlapping events
+  check_valid: params(a list of durations to check, a list of start times that
+  correlate to durations, and the start time of the function to be added)
+    The helper function to check for overlapping events
+'''
 import math
 
 
@@ -95,16 +97,18 @@ class Event(object):    #Create class for managing Event Time
 
 
 class Free_Time(object):
-    """docstring for Free_Time."""
+    """Create a negative copy of the tuple list that is passed in (find gaps)."""
     def __init__(self, filled_time):
         self.free_time = []
 
     def sort_list(self, filled_time):
+        ''' param is the list[(start_time: int, duration: int)], returns sorted by start time  '''
         sorted_by_first = sorted(filled_time, key=lambda tup: tup[0])
         return sorted_by_first
 
 #parse_list only works on in-order list
     def parse_list(self, filled_time):
+        ''' Create list with new start time as previous event end time and duration that lasts until next event starts  '''
         filled_time = self.sort_list(filled_time)
 
         free_time_length = len(filled_time)
@@ -123,6 +127,7 @@ class Free_Time(object):
             #The first index in the tuple is the start time, the second index is the end time
 
 def time_convert(time):
+    ''' param is int # of minutes, returns converted tuple '''
     minutes = time%60
     hours = math.trunc(time/60.0)
     return (hours,minutes)
