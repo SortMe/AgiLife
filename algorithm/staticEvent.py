@@ -21,32 +21,12 @@
 #    The helper function to check for overlapping events
 import math
 
-class Free_Time(object):
-    """docstring for Free_Time."""
-    def __init__(self, filled_time, unit_length):
-        self.free_time = []
-
-
-    def parse_list(self, filled_time):
-        free_time_length = len(filled_time)
-        start_time = 480
-        period_end = start_time + 179
-        self.free_time.append((start_time, filled_time[0][0] - start_time ))
-        for i in range(1, free_time_length):
-            start_time = filled_time[i-1][0] + filled_time[i-1][1]
-            duration = filled_time[i][0] - start_time
-            self.free_time.append((start_time, duration))
-        #This last iteration accounts for the last case, due to staggered iterative input one index is out of scope
-        start_time = filled_time[free_time_length-1][0] + filled_time[free_time_length-1][1]
-        duration = period_end - start_time
-        self.free_time.append((start_time, duration ))
-            #The first index in the tuple is the start time, the second index is the end time
-
 
 class Event(object):    #Create class for managing Event Time
   def __init__(self):
 
 #Establish lists for Time, these will be tuples of (startTime, duration)
+    self.unit_duration = 179
     self.early_morning_time = []
     self.late_morning_time = []
     self.early_evening_time = []
@@ -71,13 +51,13 @@ class Event(object):    #Create class for managing Event Time
 
 
 #Function checks to make sure the added value doesn't conflict with existing events
-  def check_valid(self,list_time, check_time, check_duration):  # list, list, int
+  def check_valid(self,list_time, check_time, check_duration):  # list, int, int____________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
     for i in range(0, len(list_time)):
-      time_being_added = list_time[i][0]
-      time_already_logged = list_time[i][1]
-      time_between_events = abs(time_being_added - check_time)
+      time_already_logged = list_time[i][0]
+      time_logged_duration = list_time[i][1]
+      time_between_events = abs(time_already_logged - check_time)
 
-      if time_between_events < time_already_logged: #check for before new event
+      if time_between_events < time_logged_duration: #check for before new event
         return False
       if time_between_events < check_duration:
           return False
@@ -89,21 +69,21 @@ class Event(object):    #Create class for managing Event Time
 #Function called to input new events
   def build_event(self, time, duration):
   #Minutes into day
-    unit_duration = 179
-    early_morning = 480
-    late_morning = 660
-    early_evening = 840
-    late_evening = 1000
+    unit_duration = 179  #time gap between each 
+    early_morning = 480 #8:00 AM
+    late_morning = 660  #11:00 AM
+    early_evening = 840  #2:00 PM
+    late_evening = 1000 #5:00 PM
 
     if time > early_morning and time < early_morning + unit_duration:
       if self.check_valid(self.early_morning_time, time, duration) == True:
         self.add_early_morning(time, duration)
 
-    if time > late_morning and time < lateMorning + unit_duration:
+    if time > late_morning and time < late_morning + unit_duration:
       if self.check_valid(self.late_morning_time, time, duration) == True:
         self.add_late_morning(time, duration)
 
-    if time > early_evening and time < earlyEvening + unit_duration:
+    if time > early_evening and time < early_evening + unit_duration:
       if self.check_valid(self.early_evening_time, time, duration) == True:
         self.add_early_evening(time, duration)
 
@@ -111,6 +91,36 @@ class Event(object):    #Create class for managing Event Time
       if self.check_valid(self.late_evening_time, time, duration) == True:
         self.add_late_evening(time, duration)
 
+
+
+
+class Free_Time(object):
+    """docstring for Free_Time."""
+    def __init__(self, filled_time):
+        self.free_time = []
+
+    def sort_list(self, filled_time):
+        sorted_by_first = sorted(filled_time, key=lambda tup: tup[0])
+        return sorted_by_first
+
+#parse_list only works on in-order list
+    def parse_list(self, filled_time):
+        filled_time = self.sort_list(filled_time)
+
+        free_time_length = len(filled_time)
+        # TODO allow for different start_times
+        start_time = 480
+        period_end = start_time + 179
+        self.free_time.append((start_time, filled_time[0][0] - start_time ))
+        for i in range(1, free_time_length):
+            start_time = filled_time[i-1][0] + filled_time[i-1][1]
+            duration = filled_time[i][0] - start_time
+            self.free_time.append((start_time, duration))
+        #This last iteration accounts for the last case, due to staggered iterative input one index is out of scope
+        start_time = filled_time[free_time_length-1][0] + filled_time[free_time_length-1][1]
+        duration = period_end - start_time
+        self.free_time.append((start_time, duration ))
+            #The first index in the tuple is the start time, the second index is the end time
 
 def time_convert(time):
     minutes = time%60
@@ -122,40 +132,3 @@ def time_convert(time):
 # object.EarlyMorningduration --print duration of the events
 # object.getEarlyMorning(30) --get all events that last for 30 minutes or
 # longer
-
-
-
-def main():
-    static = Event()    #build object
-    static.build_event(490, 5)  #add static events to object
-    static.build_event(500, 10)
-    static.build_event(565, 30)
-    static.build_event(550, 40)
-    static.build_event(540,30)
-    unit_length = 179
-    free = Free_Time(static.early_morning_time, unit_length)
-    free.parse_list(static.early_morning_time)
-
-    for i in range (0, len(free.free_time)):
-        time = time_convert(free.free_time[i][0])
-        print 'The free time starts at:', time[0],':', time[1]
-        print 'And lasts for:', free.free_time[i][1], " minutes"
-
-
-
-    print '-------------------------------------'
-
-
-    for i in range (0, len(static.early_morning_time)):
-      time = time_convert(static.early_morning_time[i][0])
-      print 'The event starts at: ', time[0],':', time[1]
-      #Minutes into day
-      print 'and lasts for: ',static.early_morning_time[i][1] ,' minutes.'
-
-
-
-
-
-
-
-main()
