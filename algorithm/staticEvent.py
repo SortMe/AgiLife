@@ -1,31 +1,22 @@
 '''
- Each data point needs: Minutes availible, time of day qualifier, potential
- weight:
+parse_list(list_of_events)  ---> returns a dynamic array of tuples with the free time
+sort_list(tuple_list) ---> Sorts the list by start time
+add_late_morning(start time, duration) ----> push event to end of list
+check_valid(current event list, time to be added, duration to be added) ----> true if can be added, false if can't
+build_event(start time, duration) ----> calls other functions to intelligently add the event to the array
+time_convert(minutes to be converted ) ---> converts an int (number of minutes) to a tuple of hours, minutes
+
 1440 minutes per day, say day is from 8a to 8p for ease,
 Early Morning: (480 - 660) duration(180 min)
 Late Morning (660 - 840)
 Early Evening (840 - 1000)
 Late Evening (1000 - 1180)
-
-This allows for the creation of Static Events:
- the Time suffix is the start time of each unit
- the duration suffix is the duration of each unit
-
- The class functions are:
-  Build Event: params( time of event to be added, duration of event to be
-  added)
-   - checks for proper category to be placed in
-   - checks to make sure it wouldn't overlap with another event
-
-  check_valid: params(a list of durations to check, a list of start times that
-  correlate to durations, and the start time of the function to be added)
-    The helper function to check for overlapping events
 '''
 import math
 
-
 class Event(object):    #Create class for managing Event Time
   def __init__(self):
+
 
 #Establish lists for Time, these will be tuples of (startTime, duration)
     self.unit_duration = 179
@@ -35,6 +26,35 @@ class Event(object):    #Create class for managing Event Time
     self.late_evening_time = []
 
     self.time_conversion = []
+
+    self.free_time = []
+
+#parse_list only works on in-order list
+  def parse_list(self, filled_time):
+    ''' Create list with new start time as previous event end time and duration that lasts until next event starts  '''
+    filled_time = self.sort_list(filled_time)
+
+    free_time_length = len(filled_time)
+    # TODO allow for different start_times
+    start_time = 480
+    period_end = start_time + 179
+    self.free_time.append((start_time, filled_time[0][0] - start_time ))
+    for i in range(1, free_time_length):
+        start_time = filled_time[i-1][0] + filled_time[i-1][1]
+        duration = filled_time[i][0] - start_time
+        self.free_time.append((start_time, duration))
+    #This last iteration accounts for the last case, due to staggered iterative input one index is out of scope
+    start_time = filled_time[free_time_length-1][0] + filled_time[free_time_length-1][1]
+    duration = period_end - start_time
+    self.free_time.append((start_time, duration ))
+            #The first index in the tuple is the start time, the second index is the end time
+
+
+  def sort_list(self, tuple_list):
+    ''' param is the list[(start_time: int, duration: int)], returns sorted by start time  '''
+    sorted_by_first = sorted(tuple_list, key=lambda tup: tup[0])
+    return sorted_by_first
+
 
   def add_late_morning(self, startTime, duration):
     self.late_morning_time.append((startTime,duration))
@@ -96,44 +116,10 @@ class Event(object):    #Create class for managing Event Time
 
 
 
-class Free_Time(object):
-    """Create a negative copy of the tuple list that is passed in (find gaps)."""
-    def __init__(self, filled_time):
-        self.free_time = []
 
-    def sort_list(self, filled_time):
-        ''' param is the list[(start_time: int, duration: int)], returns sorted by start time  '''
-        sorted_by_first = sorted(filled_time, key=lambda tup: tup[0])
-        return sorted_by_first
 
-#parse_list only works on in-order list
-    def parse_list(self, filled_time):
-        ''' Create list with new start time as previous event end time and duration that lasts until next event starts  '''
-        filled_time = self.sort_list(filled_time)
-
-        free_time_length = len(filled_time)
-        # TODO allow for different start_times
-        start_time = 480
-        period_end = start_time + 179
-        self.free_time.append((start_time, filled_time[0][0] - start_time ))
-        for i in range(1, free_time_length):
-            start_time = filled_time[i-1][0] + filled_time[i-1][1]
-            duration = filled_time[i][0] - start_time
-            self.free_time.append((start_time, duration))
-        #This last iteration accounts for the last case, due to staggered iterative input one index is out of scope
-        start_time = filled_time[free_time_length-1][0] + filled_time[free_time_length-1][1]
-        duration = period_end - start_time
-        self.free_time.append((start_time, duration ))
-            #The first index in the tuple is the start time, the second index is the end time
-
-def time_convert(time):
+  def time_convert(self, time):
     ''' param is int # of minutes, returns converted tuple '''
     minutes = time%60
     hours = math.trunc(time/60.0)
     return (hours,minutes)
-
-# Use Examples:
-# object.early_morning_time --- print list of times for early morning events
-# object.EarlyMorningduration --print duration of the events
-# object.getEarlyMorning(30) --get all events that last for 30 minutes or
-# longer
