@@ -25,12 +25,13 @@ class Event(object):    #Create class for managing Event Time
     self.early_evening_time = []
     self.late_evening_time = []
 
-    self.time_conversion = []
-
     self.free_time = []
 
 #parse_list only works on in-order list
   def parse_list(self, filled_time):
+    ''' check for empty list  '''
+    if not filled_time:
+        return
     ''' Create list with new start time as previous event end time and duration that lasts until next event starts  '''
     filled_time = self.sort_list(filled_time)
 
