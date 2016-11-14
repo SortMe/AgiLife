@@ -19,11 +19,10 @@ class Place_Event(object):
             event_object.parse_list(event_object.late_evening_time)
 
 
-        duration = dynamic_event_duration + buffer
+        duration = dynamic_event_duration + (buffer * 2)
 
         for i in range (0, len(event_object.free_time)):
             if event_object.free_time[i][1] > duration:
-                time = event_object.time_convert(event_object.free_time[i][0])
+                time = event_object.time_convert(event_object.free_time[i][0]+buffer)
                 print 'Can place at: ', time[0], ':',time[1]
-                self.new_list.append((event_object.free_time[i][0], dynamic_event_duration))
-                
+                self.new_list.append((event_object.free_time[i][0]+buffer, dynamic_event_duration))

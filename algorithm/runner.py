@@ -33,7 +33,7 @@ print '-----------------------------------'
 #Create parameters for dynamic event
 dynamic_event_duration =  10
 pick_time = 0  # pick between 0-3
-pick_buffer = 0
+pick_buffer = 10
 new_event = place_dynamic.Place_Event()
 new_event.calculate_event(pick_time, pick_buffer, User1, dynamic_event_duration)
 

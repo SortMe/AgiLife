@@ -69,17 +69,17 @@ class Event(object):    #Create class for managing Event Time
     sorted_by_first = sorted(tuple_list, key=lambda tup: tup[0])
     return sorted_by_first
 
-  def add_late_morning(self, startTime, duration):
-    self.late_morning_time.append((startTime,duration))
+  def add_late_morning(self, start_time, duration):
+    self.late_morning_time.append((start_time,duration))
 
-  def add_early_morning(self, startTime, duration):
-    self.early_morning_time.append((startTime,duration))
+  def add_early_morning(self, start_time, duration):
+    self.early_morning_time.append((start_time,duration))
 
-  def add_late_evening(self, startTime, duration):
-    self.late_evening_time.append((startTime,duration))
+  def add_late_evening(self, start_time, duration):
+    self.late_evening_time.append((start_time,duration))
 
-  def add_early_evening(self, startTime, duration):
-    self.early_evening_time.append((startTime, duration))
+  def add_early_evening(self, start_time, duration):
+    self.early_evening_time.append((start_time, duration))
 
 
 #Function checks to make sure the added value doesn't conflict with existing events
