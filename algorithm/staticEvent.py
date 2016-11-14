@@ -16,28 +16,42 @@ import math
 
 class Event(object):    #Create class for managing Event Time
   def __init__(self):
-
-
 #Establish lists for Time, these will be tuples of (startTime, duration)
-    self.unit_duration = 179
+#maintained by build_event
     self.early_morning_time = []
     self.late_morning_time = []
     self.early_evening_time = []
     self.late_evening_time = []
-
-    self.time_conversion = []
-
+# maintained by parse_list
     self.free_time = []
+
+  #Minutes into day
+    self.unit_duration = 179  #time gap between each
+    self.early_morning = 480 #8:00 AM
+    self.late_morning = 660  #11:00 AM
+    self.early_evening = 840  #2:00 PM
+    self.late_evening = 1000 #5:00 PM
+
+  def check_timeframe(self, time_of_event):
+      if (time_of_event < self.late_morning):
+          return self.early_morning
+      if (time_of_event < self.early_evening):
+          return self.late_morning
+      if (time_of_event < self.late_evening):
+          return self.early_evening
+      return self.late_evening
 
 #parse_list only works on in-order list
   def parse_list(self, filled_time):
+    ''' check for empty list  '''
+    if not filled_time:
+        return
     ''' Create list with new start time as previous event end time and duration that lasts until next event starts  '''
     filled_time = self.sort_list(filled_time)
 
     free_time_length = len(filled_time)
-    # TODO allow for different start_times
-    start_time = 480
-    period_end = start_time + 179
+    start_time = self.check_timeframe(filled_time[0][0])
+    period_end = start_time + self.unit_duration
     self.free_time.append((start_time, filled_time[0][0] - start_time ))
     for i in range(1, free_time_length):
         start_time = filled_time[i-1][0] + filled_time[i-1][1]
@@ -55,21 +69,17 @@ class Event(object):    #Create class for managing Event Time
     sorted_by_first = sorted(tuple_list, key=lambda tup: tup[0])
     return sorted_by_first
 
+  def add_late_morning(self, start_time, duration):
+    self.late_morning_time.append((start_time,duration))
 
-  def add_late_morning(self, startTime, duration):
-    self.late_morning_time.append((startTime,duration))
+  def add_early_morning(self, start_time, duration):
+    self.early_morning_time.append((start_time,duration))
 
+  def add_late_evening(self, start_time, duration):
+    self.late_evening_time.append((start_time,duration))
 
-  def add_early_morning(self, startTime, duration):
-    self.early_morning_time.append((startTime,duration))
-
-
-  def add_late_evening(self, startTime, duration):
-    self.late_evening_time.append((startTime,duration))
-
-
-  def add_early_evening(self, startTime, duration):
-    self.early_evening_time.append((startTime, duration))
+  def add_early_evening(self, start_time, duration):
+    self.early_evening_time.append((start_time, duration))
 
 
 #Function checks to make sure the added value doesn't conflict with existing events
@@ -86,30 +96,21 @@ class Event(object):    #Create class for managing Event Time
 
     return True
 
-
-
 #Function called to input new events
   def build_event(self, time, duration):
-  #Minutes into day
-    unit_duration = 179  #time gap between each
-    early_morning = 480 #8:00 AM
-    late_morning = 660  #11:00 AM
-    early_evening = 840  #2:00 PM
-    late_evening = 1000 #5:00 PM
-
-    if time > early_morning and time < early_morning + unit_duration:
+    if time > self.early_morning and time < self.early_morning + self.unit_duration:
       if self.check_valid(self.early_morning_time, time, duration) == True:
         self.add_early_morning(time, duration)
 
-    if time > late_morning and time < late_morning + unit_duration:
+    if time > self.late_morning and time < self.late_morning + self.unit_duration:
       if self.check_valid(self.late_morning_time, time, duration) == True:
         self.add_late_morning(time, duration)
 
-    if time > early_evening and time < early_evening + unit_duration:
+    if time > self.early_evening and time < self.early_evening + self.unit_duration:
       if self.check_valid(self.early_evening_time, time, duration) == True:
         self.add_early_evening(time, duration)
 
-    if time > late_evening and time < late_evening + unit_duration:
+    if time > self.late_evening and time < self.late_evening + self.unit_duration:
       if self.check_valid(self.late_evening_time, time, duration) == True:
         self.add_late_evening(time, duration)
 
