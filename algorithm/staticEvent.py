@@ -21,7 +21,6 @@ class Event(object):    #Create class for managing Event Time
 
 
 #Establish lists for Time, these will be tuples of (startTime, duration)
-    self.unit_duration = 179
     self.early_morning_time = []
     self.late_morning_time = []
     self.early_evening_time = []
@@ -60,7 +59,7 @@ class Event(object):    #Create class for managing Event Time
 
     free_time_length = len(filled_time)
     start_time = self.check_timeframe(filled_time[0][0])
-    period_end = start_time + 179
+    period_end = start_time + self.unit_duration
     self.free_time.append((start_time, filled_time[0][0] - start_time ))
     for i in range(1, free_time_length):
         start_time = filled_time[i-1][0] + filled_time[i-1][1]
