@@ -36,3 +36,5 @@ pick_time = 3  # pick between 0-3
 pick_buffer = 0
 new_event = place_dynamic.Place_Event()
 new_event.calculate_event(pick_time, pick_buffer, User1, dynamic_event_duration)
+
+print new_event.new_list

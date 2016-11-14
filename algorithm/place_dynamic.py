@@ -25,3 +25,5 @@ class Place_Event(object):
             if event_object.free_time[i][1] > duration:
                 time = event_object.time_convert(event_object.free_time[i][0])
                 print 'Can place at: ', time[0], ':',time[1]
+                self.new_list.append((event_object.free_time[i][0], dynamic_event_duration))
+                
