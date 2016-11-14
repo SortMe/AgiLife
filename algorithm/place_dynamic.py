@@ -31,4 +31,5 @@ class Place_Event(object):
 
         for i in range (0, len(event_object.free_time)):
             if event_object.free_time[i][1] > duration:
-                print 'Can place at: ', event_object.free_time[i][1]
+                time = event_object.time_convert(event_object.free_time[i][0])
+                print 'Can place at: ', time[0], ':',time[1]
