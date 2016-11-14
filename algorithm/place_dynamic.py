@@ -8,14 +8,6 @@ class Place_Event(object):
 
 
     def calculate_event(self, preference, buffer, event_object, dynamic_event_duration):
-        '''
-        options = {0 : event_object.parse_list(event_object.early_morning_time),
-            1 : event_object.parse_list(event_object.late_morning_time),
-            2 : event_object.parse_list(event_object.early_evening_time),
-            3 : event_object.parse_list(event_object.late_evening_time),
-            }
-        options[preference]()
-'''
         '''  chose the correct list to work with  '''
         if (preference == 0):
             event_object.parse_list(event_object.early_morning_time)
