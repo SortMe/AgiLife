@@ -43,11 +43,12 @@ class Event(object):    #Create class for managing Event Time
 
 #parse_list only works on in-order list
   def parse_list(self, filled_time):
+    self.free_time = []
     ''' check for empty list  '''
     if not filled_time:
         return
     ''' Create list with new start time as previous event end time and duration that lasts until next event starts  '''
-    filled_time = self.sort_list(filled_time)
+    filled_time = self.sort_list(filled_time, 0)
 
     free_time_length = len(filled_time)
     start_time = self.check_timeframe(filled_time[0][0])
@@ -64,9 +65,9 @@ class Event(object):    #Create class for managing Event Time
             #The first index in the tuple is the start time, the second index is the end time
 
 
-  def sort_list(self, tuple_list):
+  def sort_list(self, tuple_list, index):
     ''' param is the list[(start_time: int, duration: int)], returns sorted by start time  '''
-    sorted_by_first = sorted(tuple_list, key=lambda tup: tup[0])
+    sorted_by_first = sorted(tuple_list, key=lambda tup: tup[index])
     return sorted_by_first
 
   def add_late_morning(self, start_time, duration):

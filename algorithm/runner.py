@@ -24,6 +24,7 @@ for i in range (0, list_length):
 
 #print calendar events
 print '-----------------------------------'
+User1.early_morning_time = User1.sort_list(User1.early_morning_time, 0)
 for i in range (0, len(User1.early_morning_time)):
     time = User1.time_convert(User1.early_morning_time[i][0])
     print 'The event starts at: ',time[0],':',time[1]
@@ -31,10 +32,15 @@ for i in range (0, len(User1.early_morning_time)):
 
 print '-----------------------------------'
 #Create parameters for dynamic event
-dynamic_event_duration =  10
+dynamic_event = []
+weight = 0.70
+dynamic_event_duration =  13
 pick_time = 0  # pick between 0-3
+dynamic_event.append((dynamic_event_duration, pick_time, weight))
+dynamic_event.append((13, 0, 0.80))
 pick_buffer = 10
-new_event = place_dynamic.Place_Event()
-new_event.calculate_event(pick_time, pick_buffer, User1, dynamic_event_duration)
+new_event = place_dynamic.Place_Event(dynamic_event, User1, pick_buffer)
+User1.free_time = User1.sort_list(User1.free_time, 0)
 
-print new_event.new_list
+#new_event.calculate_event(pick_buffer)
+new_event.add_dynamic()
