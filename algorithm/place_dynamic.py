@@ -31,52 +31,19 @@ class Place_Event(object):
 
     def sort_weighted(self):
         for i in range(0, len(self.dynamic_event)-1):
+            self.dynamic_event = self.event_object.sort_list(self.dynamic_event, 0)
             #this conditional checks to see if they are of the same duration, remove this to give precedence to weight
             if self.dynamic_event[i][0] == self.dynamic_event[i+1][0]:
                 #this checks the weight correclty
                 if self.dynamic_event[i][2] < self.dynamic_event[i+1][2]:
                     self.dynamic_event[i], self.dynamic_event[i+1] = self.dynamic_event[i+1], self.dynamic_event[i]
 
-
-
-
-    def add_dynamic(self):
-        self.sort_weighted()
+    def find_min_free_index(self, current_duration):
         self.calculate_event()
-
-# this loop checks for each dynamic event that needs to be placed
-        if self.event_object.free_time == []:
-            print 'k'
-            return
-        for j in range(0, len(self.dynamic_event)):
-            #make sure to sort so the highest weight is passed in first
-#            self.dynamic_event = self.event_object.sort_list(self.dynamic_event, 2)
-            min = (self.dynamic_event[0][0] + self.buffer, 0)
-            print 'adding: ', self.dynamic_event[j][0]
-# this loop checks for availible free time for each dynamic event
-            for i in range(0, len(self.event_object.free_time)):
-                dynamic_duration = self.dynamic_event[j][0] + self.buffer
-                free_duration = self.event_object.free_time[i][1]
-
-                start_time = self.event_object.free_time[i][0]+self.buffer
-                duration = self.dynamic_event[j][0]
-                #min is at tuple of
-
-                if free_duration > dynamic_duration:
-                    if min[0] > free_duration - dynamic_duration:
-                        min = (free_duration - dynamic_duration, i)
-                else:
-                    print 'yolo'
-                    min = (float('inf'), i)
-
-            start_time = self.event_object.free_time[min[1]][0]+self.buffer
-            duration = self.dynamic_event[j][0]
-
-            self.new_list.append((start_time,duration))
-            self.event_object.build_event(start_time, duration)
-            self.calculate_event()
-
-
-        print self.new_list
-        print self.event_object.early_morning_time, '-----EARLY MORNING'
-        print self.event_object.free_time, '-----FREE TIME'
+        min = (float('inf'), 0)
+        for i in range(0, len(self.event_object.free_time)):
+            current_free = self.event_object.free_time[i][1]
+            if current_free > (current_duration + (2 * self.buffer)):
+                if min[0] > current_free:
+                    min = (current_free, i)
+        return min[1]

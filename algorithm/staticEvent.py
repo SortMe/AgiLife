@@ -90,9 +90,13 @@ class Event(object):    #Create class for managing Event Time
       time_logged_duration = list_time[i][1]
       time_between_events = abs(time_already_logged - check_time)
 
-      if time_between_events < time_logged_duration: #check for before new event
+      if (time_already_logged < check_time) and (time_already_logged + time_logged_duration > check_time):
+
+#      if time_between_events < time_logged_duration: #check for before new event
         return False
-      if time_between_events < check_duration:
+        #TODO BUG HERE
+#      if time_between_events < check_duration:
+        if (time_already_logged > check_time) and (time_already_logged - time_logged_duration < check_time):
           return False
 
     return True
