@@ -1,20 +1,48 @@
 
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/html">
 <html lang="en-US">
 <head>
   <title>AgiLife</title>
   <meta charset="UTF-8">
   {% load static %}
   <link rel="stylesheet" type="text/css" href="{% static 'users/styles.css'  %}">
+
+  <script src="http://code.jquery.com/jquery-2.2.1.js"> </script>
+
+<link rel='stylesheet' type='text/css' href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/1.6.4/fullcalendar.css" />
+<script type='text/javascript' src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/1.6.4/fullcalendar.min.js"></script>
 </head>
 <body>
 <font color="rgb(10,10,10)" style="font-family:Open Sans;text-align:center;">
+<div id="calendar"></div>
 <h1><em> AgiLife</em><br> We will make the time for you </h1>
 <h2> About Us <br>Contact Information<br>Source Code<br>Mission Statement<br>User Commitment</h2>
-<h3>
-<iframe src="https://calendar.google.com/calendar/embed?showNav=0&amp;showPrint=0&amp;showTabs=0&amp;showCalendars=0&amp;mode=WEEK&amp;height=600&amp;wkst=1&amp;bgcolor=%23999999&amp;src=hfngjolt50ubkjdbrt20vonblo%40group.calendar.google.com&amp;color=%235229A3&amp;ctz=America%2FDenver" style="border:solid 1px #777" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+
+  <!-- Text Input bars: Event, Start Time, End Time -->
+<input type='text' name='event' id='event' maxlength="50" placeholder="Event" /><br/>
+<input type='text' name='start' id='start' maxlength="50" placeholder="Start Time" /><br/>
+<input type='text' name='end' id='end' maxlength="50" placeholder="Length of
+ Event" /><br/>
+<!-- Submit button -> calls function getEvents() -->
+<input type='button' name='Submit' value='Submit' onclick="getEvents()" />
+
+  <h3>
+    
+  <script>
+  $(document).ready(function()
+  {
+
+    // page is now ready, initialize the calendar...
+    $('#calendar').fullCalendar({
+        // put your options and callbacks here
+      events: '/schedule/api/occurrences?calendar_slug=example'
+    })
+   });
+  </script>
+
 </h3>
+
 <script>
 //Build dynamic arrays to hold information
 var client = new Object();
@@ -29,13 +57,7 @@ var client = new Object();
 	}
 </script>
 
-<!-- Text Input bars: Event, Start Time, End Time -->
-<input type='text' name='event' id='event' maxlength="50" placeholder="Event" /><br/>
-<input type='text' name='start' id='start' maxlength="50" placeholder="Start Time" /><br/>
-<input type='text' name='end' id='end' maxlength="50" placeholder="Length of
- Event" /><br/>
-<!-- Submit button -> calls function getEvents() -->
-<input type='button' name='Submit' value='Submit' onclick="getEvents()" />
+
 
  
 <p id='doEvent'></p>
