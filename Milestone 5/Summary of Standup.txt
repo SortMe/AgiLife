@@ -1,0 +1,5 @@
+Ethan spoke about the algorithm was nearly finished, and how he was going to look into placing the events.
+Tom was going to work on Milestone 5 and the algorithm.
+Matt was looking into displaying the calendar on the website and was going to continue with it.
+Chris was planning on continuing to get the events to be stored in the database so that they can be worked with.
+Rachel was working on some of market research and was planning on improving the website and assisting Matt+Chris.
