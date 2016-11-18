@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+
+>>>>>>> dd671450fd9c2ac71449e4d79af5c40e669a9f4d
 import staticEvent
 import place_dynamic
 import json
