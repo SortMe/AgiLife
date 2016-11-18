@@ -1,5 +1,4 @@
 
-
 import staticEvent
 import place_dynamic
 import json
