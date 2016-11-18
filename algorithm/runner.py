@@ -1,8 +1,10 @@
-
-
 import staticEvent
 import place_dynamic
 import json
+
+#TODO implement shifting pick_time values
+#TODO implement insert to middle when < 20
+#TODO implement begining and tail concat of lists so they don't end at buffer
 
 with open('input_data.json') as data_file:
     data = json.load(data_file)
@@ -38,6 +40,8 @@ for i in range (0, len(User1.early_morning_time)):
     print 'The event starts at: ',time[0],':',time[1]
     print 'and lasts for: ',User1.early_morning_time[i][1],' minutes'
 
+print '-----------------------------------'
+print 'List to insert: ', dynamic_event
 print '-----------------------------------'
 #Create parameters for dynamic event
 #dynamic_event.append((dynamic_event_duration, pick_time, weight))
