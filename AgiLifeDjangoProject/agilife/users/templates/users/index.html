@@ -1,4 +1,5 @@
 
+<<<<<<< HEAD
 
 
 
@@ -143,6 +144,75 @@
         <script src="assets/js/main.js"></script>
         
     </body>
+=======
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<html lang="en-US">
+<head>
+  <title>AgiLife</title>
+  <meta charset="UTF-8">
+  {% load static %}
+  <link rel="stylesheet" type="text/css" href="{% static 'users/styles.css'  %}">
+
+  <script src="http://code.jquery.com/jquery-2.2.1.js"> </script>
+
+<link rel='stylesheet' type='text/css' href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/1.6.4/fullcalendar.css" />
+<script type='text/javascript' src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/1.6.4/fullcalendar.min.js"></script>
+</head>
+<body>
+<font color="rgb(10,10,10)" style="font-family:Open Sans;text-align:center;">
+<div id="calendar"></div>
+<h1><em> AgiLife</em><br> We will make the time for you </h1>
+<h2> About Us <br>Contact Information<br>Source Code<br>Mission Statement<br>User Commitment</h2>
+
+  <!-- Text Input bars: Event, Start Time, End Time -->
+<input type='text' name='event' id='event' maxlength="50" placeholder="Event" /><br/>
+<input type='text' name='start' id='start' maxlength="50" placeholder="Start Time" /><br/>
+<input type='text' name='end' id='end' maxlength="50" placeholder="Length of
+ Event" /><br/>
+<!-- Submit button -> calls function getEvents() -->
+<input type='button' name='Submit' value='Submit' onclick="getEvents()" />
+
+  <h3>
+    
+  <script>
+  $(document).ready(function()
+  {
+
+    // page is now ready, initialize the calendar...
+    $('#calendar').fullCalendar({
+        // put your options and callbacks here
+      events: '/schedule/api/occurrences?calendar_slug=example'
+    })
+   });
+  </script>
+
+</h3>
+
+<script>
+//Build dynamic arrays to hold information
+var client = new Object();
+	client.events = [];
+	client.startTime = [];
+	client.endTime = [];
+	function getEvents(){ //Get the text entered in the fields on button click
+	client.events.push(document.getElementById("event").value);
+	client.startTime.push(document.getElementById("start").value);
+	client.endTime.push(document.getElementById("end").value);
+	document.getElementById("doEvent").innerHTML = (client.events.join(' '))+' '+(client.startTime.join(' '))+' '+(client.endTime.join(' '));
+	}
+</script>
+
+
+
+ 
+<p id='doEvent'></p>
+<!-- this is the place holder that prints the output of the data that must go
+to SQL -->
+
+</font>
+</body>
+>>>>>>> a9faedc5715c8e6209c50e11bc9eeb74480a53ab
 </html>
 
 

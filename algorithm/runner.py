@@ -7,9 +7,15 @@ with open('input_data.json') as data_file:
     data = json.load(data_file)
 
 User1 = staticEvent.Event()
-json_data = "test_one"
+json_data = "static_events"
 start_time = data[json_data].keys()
 duration = data[json_data].values()
+
+json_dynamic = "dynamic_events"
+dynamic_duration = data[json_dynamic].keys()
+dynamic_weight = data[json_dynamic].values()
+
+
 
 #print values being entered from json
 list_length = len(start_time)
@@ -20,9 +26,12 @@ for i in range (0, list_length):
 for i in range (0, list_length):
     User1.build_event(int(start_time[i]), int(duration[i]))
 
-
+dynamic_event = []
+for i in range (0, len(dynamic_duration)):
+    dynamic_event.append((int(dynamic_duration[i]), 0, float(dynamic_weight[i])))
 #print calendar events
 print '-----------------------------------'
+User1.early_morning_time = User1.sort_list(User1.early_morning_time, 0)
 for i in range (0, len(User1.early_morning_time)):
     time = User1.time_convert(User1.early_morning_time[i][0])
     print 'The event starts at: ',time[0],':',time[1]
@@ -30,10 +39,29 @@ for i in range (0, len(User1.early_morning_time)):
 
 print '-----------------------------------'
 #Create parameters for dynamic event
-dynamic_event_duration =  10
-pick_time = 0  # pick between 0-3
-pick_buffer = 10
-new_event = place_dynamic.Place_Event()
-new_event.calculate_event(pick_time, pick_buffer, User1, dynamic_event_duration)
+#dynamic_event.append((dynamic_event_duration, pick_time, weight))
+def make_dynamic(dynamic_event, User1, pick_buffer):
+    new_dynamic = place_dynamic.Place_Event(dynamic_event, User1, pick_buffer)
+    new_dynamic.calculate_event()
+    print User1.free_time
+    new_dynamic.sort_weighted()
+    for i in range (0, len(dynamic_event)):
+        new_dynamic.calculate_event()
+        duration = dynamic_event[i][0]
+        index = new_dynamic.find_min_free_index(duration)
+        start_time = User1.free_time[index][0] + pick_buffer
+        User1.build_event(start_time, duration)
+        new_dynamic.calculate_event
 
-print new_event.new_list
+
+make_dynamic(dynamic_event, User1, 5)
+print User1.sort_list(User1.early_morning_time, 0)
+
+print '-----------------------------------'
+User1.early_morning_time = User1.sort_list(User1.early_morning_time, 0)
+for i in range (0, len(User1.early_morning_time)):
+    time = User1.time_convert(User1.early_morning_time[i][0])
+    print 'The event starts at: ',time[0],':',time[1]
+    print 'and lasts for: ',User1.early_morning_time[i][1],' minutes'
+
+print '-----------------------------------'
