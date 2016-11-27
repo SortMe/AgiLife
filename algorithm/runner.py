@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-=======
-
->>>>>>> dd671450fd9c2ac71449e4d79af5c40e669a9f4d
 import staticEvent
 import place_dynamic
 import json
@@ -57,8 +53,9 @@ def make_dynamic(dynamic_event, User1, pick_buffer):
     for i in range (0, len(dynamic_event)):
         new_dynamic.calculate_event()
         duration = dynamic_event[i][0]
-        index = new_dynamic.find_min_free_index(duration)
-        start_time = User1.free_time[index][0] + pick_buffer
+#       index = new_dynamic.find_min_free_index(duration)
+#       start_time = User1.free_time[index][0] + pick_buffer
+        start_time = new_dynamic.find_min_free_index(duration)
         User1.build_event(start_time, duration)
         new_dynamic.calculate_event
 

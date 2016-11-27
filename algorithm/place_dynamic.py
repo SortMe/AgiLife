@@ -38,6 +38,20 @@ class Place_Event(object):
                 if self.dynamic_event[i][2] < self.dynamic_event[i+1][2]:
                     self.dynamic_event[i], self.dynamic_event[i+1] = self.dynamic_event[i+1], self.dynamic_event[i]
 
+    def check_middle_placement(self, min, current_duration):
+        start_time = self.event_object.free_time[min[1]][0] + self.buffer
+        smallest_min = self.event_object.free_time[min[1]][1]
+# Check to see if placing it in the middle will result in less than 20 minutes on each end
+        if((smallest_min - current_duration) / 2 < 20):
+            half_duration = current_duration / 2
+            half_smallest = self.event_object.free_time[min[1]][1] / 2
+            new_start_buffer = half_smallest - half_duration
+            return start_time + new_start_buffer
+        else:
+            return start_time
+
+
+
     def find_min_free_index(self, current_duration):
         self.calculate_event()
         min = (float('inf'), 0)
@@ -46,4 +60,7 @@ class Place_Event(object):
             if current_free > (current_duration + (2 * self.buffer)):
                 if min[0] > current_free:
                     min = (current_free, i)
-        return min[1]
+#       return min[1]
+
+#       return  self.event_object.free_time[min[1]][0] + self.buffer
+        return self.check_middle_placement(min, current_duration)
