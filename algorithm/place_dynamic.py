@@ -35,7 +35,7 @@ class Place_Event(object):
             #this conditional checks to see if they are of the same duration, remove this to give precedence to weight
             if self.dynamic_event[i][0] == self.dynamic_event[i+1][0]:
                 #this checks the weight correclty
-                if self.dynamic_event[i][2] < self.dynamic_event[i+1][2]:
+                if self.dynamic_event[i][3] < self.dynamic_event[i+1][3]:
                     self.dynamic_event[i], self.dynamic_event[i+1] = self.dynamic_event[i+1], self.dynamic_event[i]
 
     def check_middle_placement(self, min, current_duration):
@@ -60,7 +60,4 @@ class Place_Event(object):
             if current_free > (current_duration + (2 * self.buffer)):
                 if min[0] > current_free:
                     min = (current_free, i)
-#       return min[1]
-
-#       return  self.event_object.free_time[min[1]][0] + self.buffer
         return self.check_middle_placement(min, current_duration)

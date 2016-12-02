@@ -70,17 +70,17 @@ class Event(object):    #Create class for managing Event Time
     sorted_by_first = sorted(tuple_list, key=lambda tup: tup[index])
     return sorted_by_first
 
-  def add_late_morning(self, start_time, duration):
-    self.late_morning_time.append((start_time,duration))
+  def add_late_morning(self, event_to_enter):
+    self.late_morning_time.append(event_to_enter)
 
-  def add_early_morning(self, start_time, duration):
-    self.early_morning_time.append((start_time,duration))
+  def add_early_morning(self, event_to_enter):
+    self.early_morning_time.append(event_to_enter)
 
-  def add_late_evening(self, start_time, duration):
-    self.late_evening_time.append((start_time,duration))
+  def add_late_evening(self, event_to_enter):
+    self.late_evening_time.append(event_to_enter)
 
   def add_early_evening(self, start_time, duration):
-    self.early_evening_time.append((start_time, duration))
+    self.early_evening_time.append(event_to_enter)
 
 
 #Function checks to make sure the added value doesn't conflict with existing events
@@ -102,22 +102,23 @@ class Event(object):    #Create class for managing Event Time
     return True
 
 #Function called to input new events
-  def build_event(self, time, duration):
+  def build_event(self, time, duration, key):
+    event_to_enter = (time, duration, key)
     if time > self.early_morning and time < self.early_morning + self.unit_duration:
-      if self.check_valid(self.early_morning_time, time, duration) == True:
-        self.add_early_morning(time, duration)
+      if self.check_valid(self.early_morning_time, event_to_enter[0], event_to_enter[1]) == True:
+        self.add_early_morning(event_to_enter)
 
     if time > self.late_morning and time < self.late_morning + self.unit_duration:
-      if self.check_valid(self.late_morning_time, time, duration) == True:
-        self.add_late_morning(time, duration)
+      if self.check_valid(self.late_morning_time, event_to_enter[0], event_to_enter[1])== True:
+        self.add_late_morning(event_to_enter)
 
     if time > self.early_evening and time < self.early_evening + self.unit_duration:
-      if self.check_valid(self.early_evening_time, time, duration) == True:
-        self.add_early_evening(time, duration)
+      if self.check_valid(self.early_evening_time, event_to_enter[0], event_to_enter[1]) == True:
+        self.add_early_evening(event_to_enter)
 
     if time > self.late_evening and time < self.late_evening + self.unit_duration:
-      if self.check_valid(self.late_evening_time, time, duration) == True:
-        self.add_late_evening(time, duration)
+      if self.check_valid(self.late_evening_time, event_to_enter[0], event_to_enter[1]) == True:
+        self.add_late_evening(event_to_enter)
 
 
 
